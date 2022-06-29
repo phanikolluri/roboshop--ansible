@@ -8,8 +8,6 @@
     path: "{{ APP_LOCATION }}"
     state: directory
     
-
-
 - name: Download & Extract {{ COMPONENT }} Component Archive
   ansible.builtin.unarchive:
     src: https://github.com/roboshop-devops-project/{{ COMPONENT }}/archive/main.zip
@@ -18,6 +16,6 @@
 
 - name: Copy {{ COMPONENT }} Code to App Location
   ansible.builtin.copy:
-    src: /tmp/{{COMPONENT}}-main/
-    dest: "{{ APP_LOCATION }}{{SUFFIX}}"
+    src: /tmp/{{COMPONENT}}-main/{{SUFFIX}}
+    dest: "{{ APP_LOCATION }}"
     remote_src: yes
