@@ -1,13 +1,7 @@
 
 #
 #  PRINT "remove old content"
-#  cd /usr/share/nginx/html
-#  rm -rf * &>>${LOG}
-#  CHECK_STAT $?
-#
-#  PRINT "Extract ${COMPONENT} content"
-#  unzip /tmp/${COMPONENT}.zip &>>${LOG}
-#  CHECK_STAT $?
+
 #
 #  PRINT "Organise ${COMPONENT} content"
 #  mv ${COMPONENT}-main/* . && mv static/* . &&  rm -rf ${COMPONENT}-main README.md && mv localhost.conf /etc/nginx/default.d/roboshop.conf
@@ -34,7 +28,7 @@
     name: common
     tasks_from: download
 
-#- name: Copy RoboShop Config file
+#- name: Copy {{ COMPONENT }}  Config file
 #  ansible.builtin.template:
 #    src: roboshop.conf
 #    dest: /etc/nginx/default.d/roboshop.conf
