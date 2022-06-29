@@ -1,16 +1,3 @@
-
-
-#APP_COMMON_SETUP
-
-#PRINT "Install NODEJS dependencies for ${COMPONENT} component"
-#mv ${COMPONENT}-main ${COMPONENT} && cd ${COMPONENT} && npm install &>>${LOG}
-#CHECK_STAT $?
-
-#SYSTEMD
-
-#}
-
-
 - name: Setup YUM repos for NodeJS
   ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x | bash
 
