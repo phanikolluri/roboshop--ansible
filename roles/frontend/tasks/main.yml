@@ -1,7 +1,4 @@
 
-#  PRINT "Download ${COMPONENT} content"
-#  curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>${LOG}
-#  CHECK_STAT $?
 #
 #  PRINT "remove old content"
 #  cd /usr/share/nginx/html
@@ -32,7 +29,7 @@
     name: nginx
     state: installed
 
-- name: Download {{ COMPONENT }} code
+- name: Import Code Role for Code Download
   ansible.builtin.include_role:
     name: common
     tasks_from: download
