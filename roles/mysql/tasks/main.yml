@@ -1,0 +1,17 @@
+- name: Fail if the Password MYSQL_PASSWORD does not exist
+  ansible.builtin.fail:
+    msg: MYSQL_PASSWORD variable is missing.
+  when: MYSQL_PASSWORD is false
+  
+
+#- name: Copy MySQL Repo File
+#  ansible.builtin.template:
+#    src: mysql.repo
+#    dest: /etc/yum.repos.d/mysql.repo
+
+#- name: Install MySQL Server
+#  ansible.builtin.yum:
+#    name:
+#      - mysql-community-server
+#     - MySQL-python
+#    state: installed
