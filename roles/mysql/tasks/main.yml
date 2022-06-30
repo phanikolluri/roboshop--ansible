@@ -26,8 +26,8 @@
   register: mysql_log
 
 - name: print
-  debug:
-    msg: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*')\ | last ) }}"
+  ansible.builtin.set_fact:
+  line: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*')}} | str"
 
     
 
