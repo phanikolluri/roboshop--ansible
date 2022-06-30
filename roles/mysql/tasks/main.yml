@@ -30,40 +30,40 @@
   ansible.builtin.set_fact:
     DEFAULT_PASSWORD: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*') | join(' ')| split(' ') | last}}"
 
-- name: Check MySQL Password has been reset or not
-  community.mysql.mysql_info:
-    login_user: root
-    login_password: "{{MYSQL_PASSWORD}}"
-    filter: version
-  ignore_errors: yes
-  register: mysql_conn
+#- name: Check MySQL Password has been reset or not
+#  community.mysql.mysql_info:
+#    login_user: root
+#    login_password: "{{MYSQL_PASSWORD}}"
+#    filter: version
+#  ignore_errors: yes
+#  register: mysql_conn
 
-- name: Reset MySQL Password
-  ansible.builtin.shell: echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{MYSQL_PASSWORD}}';" | mysql --connect-expired-password -uroot -p"{{DEFAULT_PASSWORD}}"
-  when: mysql_conn is failed
+#- name: Reset MySQL Password
+#  ansible.builtin.shell: echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{MYSQL_PASSWORD}}';" | mysql --connect-expired-password -uroot -p"{{DEFAULT_PASSWORD}}"
+#  when: mysql_conn is failed
 
-- name: Check Validate Password Plugins
-  ansible.builtin.shell: echo show plugins  | mysql -uroot -p"{{MYSQL_PASSWORD}}" | grep validate_password
-  register: plugin_info
-  ignore_errors: yes
+#- name: Check Validate Password Plugins
+# ansible.builtin.shell: echo show plugins  | mysql -uroot -p"{{MYSQL_PASSWORD}}" | grep validate_password
+#  register: plugin_info
+#  ignore_errors: yes
 
-- name: Remove Validate Password Plugin
-  ansible.builtin.shell: echo "uninstall plugin validate_password;" | mysql -uroot -p"{{MYSQL_PASSWORD}}"
-  when: plugin_info is succeeded
+#- name: Remove Validate Password Plugin
+#  ansible.builtin.shell: echo "uninstall plugin validate_password;" | mysql -uroot -p"{{MYSQL_PASSWORD}}"
+#  when: plugin_info is succeeded
 
-- name: Download & Extract {{ COMPONENT }} Component Archive
-  ansible.builtin.unarchive:
-    src: https://github.com/roboshop-devops-project/{{ COMPONENT }}/archive/main.zip
-    dest: /tmp
-    remote_src: yes
+#- name: Download & Extract {{ COMPONENT }} Component Archive
+#  ansible.builtin.unarchive:
+#    src: https://github.com/roboshop-devops-project/{{ COMPONENT }}/archive/main.zip
+#    dest: /tmp
+#   remote_src: yes
 
-- name: Load Schema
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: /tmp/mysql-main/shipping.sql
-    login_user: root
-    login_password: "{{MYSQL_PASSWORD}}"
+#- name: Load Schema
+#  community.mysql.mysql_db:
+#    state: import
+#    name: all
+#    target: /tmp/mysql-main/shipping.sql
+#    login_user: root
+#    login_password: "{{MYSQL_PASSWORD}}"
 
 
   
