@@ -27,7 +27,8 @@
 
 - name: print
   ansible.builtin.set_fact:
-  line: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*')}} | str"
+  LINE: "{{mysql_log['content'] | b64decode | regex_findall('.*temporary password.*')}}"
+  
 
     
 
