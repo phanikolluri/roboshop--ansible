@@ -2,6 +2,7 @@
 ##### Change these values ###
 ZONE_ID="Z078807431WCP5BA26ASG"
 SG_NAME="freesource-to-public"
+IAM_INSTANCE_PROFILE="Arn=arn:aws:iam::645019601948:instance-profile/role-for-secret-manager-for-roboshop-components"
 #############################
 COMPONENT=all
 create_ec2() {
@@ -11,6 +12,7 @@ create_ec2() {
       --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${COMPONENT}}]" \
       --instance-market-options "MarketType=spot,SpotOptions={SpotInstanceType=persistent,InstanceInterruptionBehavior=stop}"\
       --security-group-ids ${SGID} \
+      --iam-instance-profile="${IAM_INSTANCE_PROFILE}" \
       | jq '.Instances[].PrivateIpAddress' | sed -e 's/"//g')
   sed -e "s/IPADDRESS/${PRIVATE_IP}/" -e "s/COMPONENT/${COMPONENT}/" route53.json >/tmp/record.json
   aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file:///tmp/record.json | jq
